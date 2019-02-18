@@ -1,0 +1,53 @@
+- name: Install Java
+  yum:
+    name: java-1.8.0-openjdk
+    state: latest
+
+- name: Install required tools
+  yum:
+    name:
+      - unzip 
+    state: latest
+
+- name: Create kafka-user
+  user:
+    name: kafka
+    shell: /sbin/nologin
+
+- name: Create logfile
+  file:
+    path: /var/log/kafka.log
+    state: touch
+    mode: "u+rw,g-rw"
+    owner: "kafka"
+    group: "kafka"
+
+- name: Download Kafka
+  get_url:
+    url: "{{kafka_url}}"
+    dest: "/opt/kafka.tar.gz"
+    mode: 0400
+
+- name: Download and uncompress Kafka
+  unarchive:
+    src: "/opt/kafka.tar.gz"
+    dest: "/usr/local/"
+    owner: "kafka"
+    remote_src: yes
+    creates: "/usr/local/{{kafka_version}}"
+
+- name: Create zookeeper-unitfile
+  template: src=zookeeper.service.j2 dest=/lib/systemd/system/zookeeper.service mode=644
+  notify:
+    - reload systemctl
+
+- name: Create kafka-unitfile
+  template: src=kafka.service.j2 dest=/lib/systemd/system/kafka.service mode=644
+  notify:
+    - reload systemctl
+
+- name: Start zookeeper
+  service: name=zookeeper.service state=started enabled=yes
+
+- name: Start kafka
+  service: name=kafka.service state=started enabled=yes
