@@ -5,6 +5,7 @@ After=zookeeper.service
 [Service]
 Type=simple
 User=kafka
+Environment=KAFKA_HEAP_OPTS="{{kafka_heapopts}}"
 ExecStart=/bin/sh -c '/usr/local/{{kafka_version}}/bin/kafka-server-start.sh /usr/local/{{kafka_version}}/config/server.properties > /var/log/kafka.log 2>&1'
 ExecStop=/usr/local/{{kafka_version}}/bin/kafka-server-stop.sh
 Restart=on-abnormal
