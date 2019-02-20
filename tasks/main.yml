@@ -42,6 +42,15 @@
     src: "/usr/local/{{kafka_version}}"
     dest: "/usr/local/kafka"
 
+- name: Create Logdirectory
+  file:
+    path: "/var/log/kafka"
+    state: directory
+    mode: 0755
+    owner: kafka
+    group: kafka
+
+
 - name: Create zookeeper-unitfile
   template: src=zookeeper.service.j2 dest=/lib/systemd/system/zookeeper.service mode=644
   notify:
@@ -51,6 +60,60 @@
   template: src=kafka.service.j2 dest=/lib/systemd/system/kafka.service mode=644
   notify:
     - reload systemctl
+
+- name: Create Keydir
+  file:
+    path: "{{kafka_keydir}}"
+    state: directory
+    mode: 0755
+
+- name: Generate key + certificate for broker
+  command: keytool -keystore server.keystore.jks -alias localhost -validity 3650 -keyalg RSA -genkey -dname "cn=localhost, ou=DSS, o=AIT, c=AT" -storepass {{kafka_ssl_serverkeystorepw}} -keypass {{kafka_ssl_serverkeypass}}
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/server.keystore.jks"
+
+- name: Generate key + certificate for ca
+  command: openssl req -new -x509 -keyout ca-key -out ca-cert -days 3650 -passout pass:{{kafka_ssl_cakeypw}} -subj "/C=AT/OU=DSS/O=AIT/CN=Kafka-CA"
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/ca-key"
+
+- name: Import ca into server.truststore
+  command: keytool -keystore server.truststore.jks -alias CARoot -import -file ca-cert -storepass {{kafka_ssl_servertruststorepw}} -noprompt 
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/server.truststore.jks"
+
+- name: Import ca into client.truststore
+  command: keytool -keystore client.truststore.jks -alias CARoot -import -file ca-cert -storepass {{kafka_ssl_clienttruststorepw}} -noprompt
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/client.truststore.jks"
+
+- name: Create server cert-request
+  command: keytool -keystore server.keystore.jks -alias localhost -certreq -file cert-file -storepass {{kafka_ssl_serverkeystorepw}} -keypass {{kafka_ssl_serverkeypass}}
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/cert-file"
+
+- name: Create signed server cert
+  command: openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days 3650 -CAcreateserial -passin pass:{{kafka_ssl_cakeypw}}
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/cert-signed"
+
+- name: Import ca-cert into server.keystore
+  shell: keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert -storepass {{kafka_ssl_serverkeystorepw}} -noprompt && touch .ca-cert-serverkeystore-imported
+  args:
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/.ca-cert-serverkeystore-imported"
+
+- name: Import signed cert into server.keystore
+  shell: keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed -storepass {{kafka_ssl_serverkeystorepw}} -keypass {{kafka_ssl_serverkeypass}} -noprompt && touch .certsigned-serverkeystore-imported
+  args: 
+    chdir: "{{kafka_keydir}}"
+    creates: "{{kafka_keydir}}/.certsigned-serverkeystore-imported"
 
 - name: Configure zookeeper
   template: src=zookeeper.properties.j2 dest=/usr/local/kafka/config/zookeeper.properties mode=644
