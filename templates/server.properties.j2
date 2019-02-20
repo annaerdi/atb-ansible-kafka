@@ -41,7 +41,7 @@ ssl.key.password={{kafka_ssl_serverkeypass}}
 ssl.truststore.location={{kafka_keydir}}/server.truststore.jks
 ssl.truststore.password={{kafka_ssl_servertruststorepw}}
 
-ssl.client.auth=required
+ssl.client.auth=none
 security.inter.broker.protocol=SSL
 
 # Hostname and port the broker will advertise to producers and consumers. If not set, 

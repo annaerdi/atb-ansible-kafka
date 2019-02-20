@@ -125,6 +125,8 @@
   notify:
     - reload kafka
 
+- name: Create client-ssl-config
+  template: src=client-ssl.properties.j2 dest=/usr/local/kafka/config/client-ssl.properties mode=644
 
 
 - name: Start zookeeper
