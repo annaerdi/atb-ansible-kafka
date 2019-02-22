@@ -1,5 +1,7 @@
 #!/usr/bin/env python36
 
+# Docs: https://readthedocs.org/projects/kafka-python/downloads/pdf/master/
+
 from kafka import KafkaConsumer
 import configparser
 import sys
