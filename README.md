@@ -5,6 +5,7 @@
 
 # Usage
 ```
+Simply put this role to the "roles"-folder and use the following playbook.yml:
 ---
 
 - hosts: localhost
