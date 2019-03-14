@@ -4,14 +4,35 @@
 - Centos
 
 # Usage
-```
+
 Simply put this role to the "roles"-folder and use the following playbook.yml:
+```
 ---
 
 - hosts: localhost
   roles:
     - kafka-centos
 
+```
+
+## Installation of Ansible and deploy Kafka:
+
+```
+yum install epel-release.noarch
+yum install python36 python36-devel python36-pip ansible git
+
+git clone https://git-service.ait.ac.at/hotwagnerw/ansible-kafka-centos.git /etc/a
+nsible/roles/kafka-centos
+
+cat > /etc/ansible/kafka.yml << EOF
+---
+- hosts: localhost
+   roles:
+     - kafka-centos
+EOF
+
+cd /etc/ansible
+ansible-playbook kafka.yml
 ```
 
 # Testing Kafka
