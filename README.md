@@ -15,7 +15,7 @@ Simply put this role to the "roles"-folder and use the following playbook.yml:
 
 ```
 
-## Installation of Ansible and deploy Kafka:
+## Install Ansible and deploy Kafka:
 
 ```
 yum install epel-release.noarch
