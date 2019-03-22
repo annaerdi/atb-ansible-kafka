@@ -31,13 +31,15 @@ options = dict(config.items("DEFAULT"))
 # print(repr(options))
 ### EOF prepare config ###
 
-
+# THIS HAS TO BE GLOBAL SO THAT THE
+# MESSAGES WILL BE SENT DURING SLEEP()
+producer = None
 
 def handle_message(topic,msg,options):
+    global producer
     producer = KafkaProducer(**options,value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-    future = producer.send(topic,msg)
     try:
-        record_metadata = future.get(timeout=10)
+        producer.send(topic,msg)
     except KafkaError:
         print("Error: " + e)
         producer.close()
@@ -45,4 +47,7 @@ def handle_message(topic,msg,options):
         return False
     return True
 
-handle_message('TestTopic', {"lala": "blah"},options)
+handle_message('TestTopic', {"test": "blah"},options)
+handle_message('TestTopic', {"test2": "blah2"},options)
+import time
+time.sleep(1)
