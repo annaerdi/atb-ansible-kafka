@@ -35,6 +35,12 @@ cd /etc/ansible
 ansible-playbook kafka.yml
 ```
 
+### Post-Installation
+```
+systemctl start kafka
+systemctl start zookeeper
+```
+
 # Testing Kafka
 
 ## Using the PLAINTEXT-Listener:
