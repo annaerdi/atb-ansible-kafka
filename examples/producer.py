@@ -28,6 +28,12 @@ config.read(configfile)
 
 options = dict(config.items("DEFAULT"))
 
+for key, val in options.items():
+    try:
+        options[key] = int(val)
+    except:
+        pass
+
 # print(repr(options))
 ### EOF prepare config ###
 
