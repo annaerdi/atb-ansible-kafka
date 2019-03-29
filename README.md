@@ -27,8 +27,8 @@ nsible/roles/kafka-centos
 cat > /etc/ansible/kafka.yml << EOF
 ---
 - hosts: localhost
-   roles:
-     - kafka-centos
+  roles:
+    - kafka-centos
 EOF
 
 cd /etc/ansible
