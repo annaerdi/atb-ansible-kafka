@@ -39,6 +39,8 @@ ansible-playbook kafka.yml
 ```
 systemctl start kafka
 systemctl start zookeeper
+systemctl enable kafka
+systemctl enable zookeeper
 ```
 
 # Testing Kafka
