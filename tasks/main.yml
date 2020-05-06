@@ -1,10 +1,10 @@
 - name: Install Java
-  yum:
-    name: java-1.8.0-openjdk
+  apt:
+    name: openjdk-13-jdk
     state: latest
 
 - name: Install required tools
-  yum:
+  apt:
     name:
       - unzip 
     state: latest

@@ -1,9 +1,9 @@
-kafka_url: http://mirror.klaus-uwe.me/apache/kafka/2.1.1/kafka_2.12-2.1.1.tgz
-kafka_version: kafka_2.12-2.1.1
+kafka_url: http://mirror.klaus-uwe.me/apache/kafka/2.5.0/kafka_2.13-2.5.0.tgz
+kafka_version: kafka_2.13-2.5.0
 kafka_heapopts: '-Xmx1G -Xms1G'
 kafka_keydir: '/usr/local/kafka/keydir'
 kafka_ssl_serverkeystorepw: 'Enoog9queiHeecu'
-kafka_ssl_serverkeypass: 'leeSae7ahbeey8V'
+kafka_ssl_serverkeypass: '{{kafka_ssl_serverkeystorepw}}'
 kafka_ssl_cakeypw: 'iceDaig8Ahghija'
 kafka_ssl_servertruststorepw: 'thaeFa9genguu1o'
 kafka_ssl_clienttruststorepw: 'eexuongeeWah3vi'
