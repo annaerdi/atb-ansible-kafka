@@ -66,11 +66,11 @@ systemctl enable zookeeper
 ## Using the PLAINTEXT-Listener:
 
 ```
-root@centos7 ~]# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TestTopic
+root@localhost ~]# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TestTopic
 Created topic "TestTopic".
-[root@centos7 ~]# cd /usr/local/kafka/
-[root@centos7 kafka]# echo "Hello, World" | /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --producer.config /usr/local/kafka/config/producer.properties --topic TestTopic > /dev/null
-[root@centos7 kafka]# /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --consumer.config /usr/local/kafka/config/consumer.properties --topic TestTopic --from-beginning
+[root@localhost ~]# cd /usr/local/kafka/
+[root@localhost kafka]# echo "Hello, World" | /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --producer.config /usr/local/kafka/config/producer.properties --topic TestTopic > /dev/null
+[root@localhost kafka]# /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --consumer.config /usr/local/kafka/config/consumer.properties --topic TestTopic --from-beginning
 Hello, World
 ^CProcessed a total of 1 messages
 ```
@@ -78,11 +78,11 @@ Hello, World
 ## Using the SSL-Listener:
 
 ```
-root@centos7 ~]# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TestTopic
+root@localhost ~]# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TestTopic
 Created topic "TestTopic".
-[root@centos7 ~]# cd /usr/local/kafka/
-[root@centos7 kafka]# echo "Hello, World" | /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9093 --producer.config /usr/local/kafka/config/client-ssl.properties --topic TestTopic > /dev/null
-[root@centos7 kafka]# /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9093 --consumer.config /usr/local/kafka/config/client-ssl.properties --topic TestTopic --from-beginning
+[root@localhost ~]# cd /usr/local/kafka/
+[root@localhost kafka]# echo "Hello, World" | /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9093 --producer.config /usr/local/kafka/config/client-ssl.properties --topic TestTopic > /dev/null
+[root@localhost kafka]# /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9093 --consumer.config /usr/local/kafka/config/client-ssl.properties --topic TestTopic --from-beginning
 Hello, World
 ^CProcessed a total of 1 messages
 ```
