@@ -17,6 +17,25 @@ Simply put this role to the "roles"-folder and use the following playbook.yml:
 
 ## Install Ansible and deploy Kafka:
 
+Ubuntu:
+```
+apt install ansible git
+
+git clone https://@git-service.ait.ac.at/ict-caiscluster/aecid/tools/ansible/kafka.git /etc/ansible/roles/kafka
+
+cat > /etc/ansible/kafka.yml << EOF
+---
+- hosts: localhost
+  roles:
+    - kafka
+EOF
+
+cd /etc/ansible
+ansible-playbook kafka.yml
+```
+
+
+Centos(CURRENTLY NOT WORKING WITH THIS ROLE!):
 ```
 yum install epel-release.noarch
 yum install python36 python36-devel python36-pip ansible git
