@@ -33,7 +33,14 @@ broker.id=0
 #   EXAMPLE:
 #     listeners = PLAINTEXT://your.host.name:9092
 #listeners=PLAINTEXT://:9092
-listeners=SSL://:9093,PLAINTEXT://:9092
+listeners=INTERNAL://localhost:9093,EXTERNAL://:9092
+
+# Hostname and port the broker will advertise to producers and consumers. If not set, 
+# it uses the value for "listeners" if configured.  Otherwise, it will use the value
+# returned from java.net.InetAddress.getCanonicalHostName().
+#advertised.listeners=PLAINTEXT://your.host.name:9092
+advertised.listeners=INTERNAL://localhost:9093,EXTERNAL://:9092
+
 
 ssl.keystore.location={{kafka_keydir}}/server.keystore.jks
 ssl.keystore.password={{kafka_ssl_serverkeystorepw}}
@@ -42,13 +49,11 @@ ssl.truststore.location={{kafka_keydir}}/server.truststore.jks
 ssl.truststore.password={{kafka_ssl_servertruststorepw}}
 
 ssl.client.auth=none
-security.inter.broker.protocol=SSL
 
-# Hostname and port the broker will advertise to producers and consumers. If not set, 
-# it uses the value for "listeners" if configured.  Otherwise, it will use the value
-# returned from java.net.InetAddress.getCanonicalHostName().
-#advertised.listeners=PLAINTEXT://your.host.name:9092
-advertised.listeners=SSL://:9093,PLAINTEXT://:9092
+listener.security.protocol.map=INTERNAL:SSL,EXTERNAL:PLAINTEXT,CONTROLLER:SSL
+inter.broker.listener.name=INTERNAL
+#security.inter.broker.protocol=SSL
+
 
 # Maps listener names to security protocols, the default is for them to be the same. See the config documentation for more details
 #listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
