@@ -114,3 +114,14 @@ Hello, World
 ^CProcessed a total of 1 messages
 ```
 
+## Starting a consumer:
+
+```
+/usr/local/kafka/bin/kafka-console-consumer.sh --topic TestTopic --bootstrap-server localhost:9092
+```
+
+## Starting a producer:
+
+```
+echo "Hallo Welt" | /usr/local/kafka/bin/kafka-console-producer.sh --topic TestTopic --bootstrap-server localhost:9092
+```
