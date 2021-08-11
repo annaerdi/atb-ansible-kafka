@@ -50,6 +50,13 @@
     owner: kafka
     group: kafka
 
+- name: Create Kafka Directory
+  file:
+    path: "{{kafka_logdir}}"
+    state: directory
+    mode: 0755
+    owner: kafka
+    group: kafka
 
 - name: Create zookeeper-unitfile
   template: src=zookeeper.service.j2 dest=/lib/systemd/system/zookeeper.service mode=644

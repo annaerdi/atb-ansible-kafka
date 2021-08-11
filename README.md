@@ -3,6 +3,29 @@
 # Requirements
 - Ubuntu
 
+# Configuration
+
+The following defaults can be used:
+
+```
+kafka_url: http://mirror.klaus-uwe.me/apache/kafka/2.6.2/kafka_2.13-2.6.2.tgz
+kafka_version: kafka_2.13-2.6.2
+kafka_heapopts: '-Xmx1G -Xms1G'
+kafka_keydir: '/usr/local/kafka/keydir'
+kafka_ssl_serverkeystorepw: 'Enoog9queiHeecu'
+kafka_ssl_serverkeypass: '{{kafka_ssl_serverkeystorepw}}'
+kafka_ssl_cakeypw: 'iceDaig8Ahghija'
+kafka_ssl_servertruststorepw: 'thaeFa9genguu1o'
+kafka_ssl_clienttruststorepw: 'eexuongeeWah3vi'
+kafka_logdir: '/var/lib/kafka'
+kafka_brokerid: 0
+# The minimum age of a log file to be eligible for deletion due to age (in hours)
+kafka_log_retention: 96
+kafka_zookeeper: localhost:2181
+kafka_logsegment_bytes: 1073741824
+kafka_log_retention_check_interval: 300000
+```
+
 # Usage
 
 Simply put this role to the "roles"-folder and use the following playbook.yml:

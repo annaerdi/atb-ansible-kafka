@@ -22,7 +22,7 @@
 ############################# Server Basics #############################
 
 # The id of the broker. This must be set to a unique integer for each broker.
-broker.id=0
+broker.id={{kafka_brokerid}}
 
 ############################# Socket Server Settings #############################
 
@@ -77,7 +77,7 @@ socket.request.max.bytes=104857600
 ############################# Log Basics #############################
 
 # A comma separated list of directories under which to store log files
-log.dirs=/tmp/kafka-logs
+log.dirs={{kafka_logdir}}
 
 # The default number of log partitions per topic. More partitions allow greater
 # parallelism for consumption, but this will also result in more files across
@@ -120,18 +120,18 @@ transaction.state.log.min.isr=1
 # from the end of the log.
 
 # The minimum age of a log file to be eligible for deletion due to age
-log.retention.hours=168
+log.retention.hours={{kafka_log_retention}}
 
 # A size-based retention policy for logs. Segments are pruned from the log unless the remaining
 # segments drop below log.retention.bytes. Functions independently of log.retention.hours.
 #log.retention.bytes=1073741824
 
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
-log.segment.bytes=1073741824
+log.segment.bytes={{kafka_logsegment_bytes}}
 
 # The interval at which log segments are checked to see if they can be deleted according
 # to the retention policies
-log.retention.check.interval.ms=300000
+log.retention.check.interval.ms={{kafka_log_retention_check_interval}}
 
 ############################# Zookeeper #############################
 
@@ -140,7 +140,7 @@ log.retention.check.interval.ms=300000
 # server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
 # You can also append an optional chroot string to the urls to specify the
 # root directory for all kafka znodes.
-zookeeper.connect=localhost:2181
+zookeeper.connect={{kafka_zookeeper}}
 
 # Timeout in ms for connecting to zookeeper
 zookeeper.connection.timeout.ms=6000
