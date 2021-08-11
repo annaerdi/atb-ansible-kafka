@@ -24,6 +24,9 @@ kafka_log_retention: 96
 kafka_zookeeper: localhost:2181
 kafka_logsegment_bytes: 1073741824
 kafka_log_retention_check_interval: 300000
+kafka_listeners: 'INTERNAL://localhost:9093,EXTERNAL://:9092'
+kafka_advertised_listeners: 'INTERNAL://localhost:9093,EXTERNAL://:9092'
+kafka_listener_security_proto_map: 'INTERNAL:SSL,EXTERNAL:PLAINTEXT,CONTROLLER:SSL'
 ```
 
 # Usage

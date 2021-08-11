@@ -33,13 +33,13 @@ broker.id={{kafka_brokerid}}
 #   EXAMPLE:
 #     listeners = PLAINTEXT://your.host.name:9092
 #listeners=PLAINTEXT://:9092
-listeners=INTERNAL://localhost:9093,EXTERNAL://:9092
+listeners={{kafka_listener}}
 
 # Hostname and port the broker will advertise to producers and consumers. If not set, 
 # it uses the value for "listeners" if configured.  Otherwise, it will use the value
 # returned from java.net.InetAddress.getCanonicalHostName().
 #advertised.listeners=PLAINTEXT://your.host.name:9092
-advertised.listeners=INTERNAL://localhost:9093,EXTERNAL://:9092
+advertised.listeners=kafka_advertised_listeners
 
 
 ssl.keystore.location={{kafka_keydir}}/server.keystore.jks
@@ -50,7 +50,7 @@ ssl.truststore.password={{kafka_ssl_servertruststorepw}}
 
 ssl.client.auth=none
 
-listener.security.protocol.map=INTERNAL:SSL,EXTERNAL:PLAINTEXT,CONTROLLER:SSL
+listener.security.protocol.map={{kafka_listener_security_proto_map}}
 inter.broker.listener.name=INTERNAL
 #security.inter.broker.protocol=SSL
 
