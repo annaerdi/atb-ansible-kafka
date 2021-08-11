@@ -1,3 +1,4 @@
+kafka_server_template: server.properties.j2
 kafka_url: http://mirror.klaus-uwe.me/apache/kafka/2.6.2/kafka_2.13-2.6.2.tgz
 kafka_version: kafka_2.13-2.6.2
 kafka_heapopts: '-Xmx1G -Xms1G'
