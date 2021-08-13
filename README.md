@@ -93,7 +93,7 @@ systemctl enable zookeeper
 ## Using the PLAINTEXT-Listener:
 
 ```
-root@localhost ~]# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TestTopic
+root@localhost ~]# /usr/local/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic TestTopic
 Created topic "TestTopic".
 [root@localhost ~]# cd /usr/local/kafka/
 [root@localhost kafka]# echo "Hello, World" | /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --producer.config /usr/local/kafka/config/producer.properties --topic TestTopic > /dev/null
@@ -105,7 +105,7 @@ Hello, World
 ## Using the SSL-Listener:
 
 ```
-root@localhost ~]# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TestTopic
+root@localhost ~]# /usr/local/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic TestTopic
 Created topic "TestTopic".
 [root@localhost ~]# cd /usr/local/kafka/
 [root@localhost kafka]# echo "Hello, World" | /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9093 --producer.config /usr/local/kafka/config/client-ssl.properties --topic TestTopic > /dev/null
