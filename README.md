@@ -1,5 +1,8 @@
 # Ansible role for kafka
 
+This role installs the kafka message broker. This installation 
+is rather meant for testbeds and not for production use cases.
+
 # Requirements
 - Ubuntu
 
@@ -8,18 +11,22 @@
 The following defaults can be used:
 
 ```
+kafka_openjdk: 'openjdk-21-jdk'
 kafka_server_template: server.properties.j2
-kafka_url: http://mirror.klaus-uwe.me/apache/kafka/2.6.2/kafka_2.13-2.6.2.tgz
-kafka_version: kafka_2.13-2.6.2
+kafka_url: https://downloads.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz
+kafka_version: kafka_2.13-3.7.0
 kafka_heapopts: '-Xmx1G -Xms1G'
-kafka_keydir: '/usr/local/kafka/keydir'
+kafka_dir: '/usr/local/kafka'
+kafka_keydir: '{{kafka_dir}}/keydir'
 kafka_ssl_serverkeystorepw: 'Enoog9queiHeecu'
 kafka_ssl_serverkeypass: '{{kafka_ssl_serverkeystorepw}}'
 kafka_ssl_cakeypw: 'iceDaig8Ahghija'
 kafka_ssl_servertruststorepw: 'thaeFa9genguu1o'
 kafka_ssl_clienttruststorepw: 'eexuongeeWah3vi'
 kafka_logdir: '/var/lib/kafka'
+kafka_zoodir: '/var/lib/zookeeper'
 kafka_brokerid: 0
+kafka_auto_create_topics: true
 # The minimum age of a log file to be eligible for deletion due to age (in hours)
 kafka_log_retention: 96
 kafka_zookeeper: localhost:2181
@@ -61,32 +68,6 @@ cd /etc/ansible
 ansible-playbook kafka.yml
 ```
 
-
-Centos(CURRENTLY NOT WORKING WITH THIS ROLE!):
-```
-yum install epel-release.noarch
-yum install python36 python36-devel python36-pip ansible git
-
-git clone https://@git-service.ait.ac.at/ict-caiscluster/aecid/tools/ansible/kafka.git /etc/ansible/roles/kafka
-
-cat > /etc/ansible/kafka.yml << EOF
----
-- hosts: localhost
-  roles:
-    - kafka
-EOF
-
-cd /etc/ansible
-ansible-playbook kafka.yml
-```
-
-### Post-Installation
-```
-systemctl start kafka
-systemctl start zookeeper
-systemctl enable kafka
-systemctl enable zookeeper
-```
 
 # Testing Kafka
 

@@ -1,6 +1,6 @@
 - name: Install Java
   apt:
-    name: openjdk-13-jdk
+    name: "{{kafka_openjdk}}"
     state: latest
 
 - name: Install required tools
@@ -40,7 +40,7 @@
   file: 
     state: link
     src: "/usr/local/{{kafka_version}}"
-    dest: "/usr/local/kafka"
+    dest: "{{kafka_dir}}"
 
 - name: Create Logdirectory
   file:
@@ -53,6 +53,14 @@
 - name: Create Kafka Directory
   file:
     path: "{{kafka_logdir}}"
+    state: directory
+    mode: 0755
+    owner: kafka
+    group: kafka
+
+- name: Create Zookeeper Directory
+  file:
+    path: "{{kafka_zoodir}}"
     state: directory
     mode: 0755
     owner: kafka
@@ -79,7 +87,7 @@
   args:
     chdir: "{{kafka_keydir}}"
     creates: "{{kafka_keydir}}/server.keystore.jks"
-
+  
 - name: Generate key + certificate for ca
   command: openssl req -new -x509 -keyout ca-key -out ca-cert -days 3650 -passout pass:{{kafka_ssl_cakeypw}} -subj "/C=AT/OU=DSS/O=AIT/CN=Kafka-CA"
   args:
@@ -123,18 +131,26 @@
     creates: "{{kafka_keydir}}/.certsigned-serverkeystore-imported"
 
 - name: Configure zookeeper
-  template: src=zookeeper.properties.j2 dest=/usr/local/kafka/config/zookeeper.properties mode=644
+  template: 
+    src: zookeeper.properties.j2 
+    dest: "{{kafka_dir}}/config/zookeeper.properties"
+    mode: 0644
   notify:
     - reload zookeeper
 
 - name: Configure kafka
-  template: src={{kafka_server_template}} dest=/usr/local/kafka/config/server.properties mode=644
+  template:
+    src: "{{kafka_server_template}}"
+    dest: "{{kafka_dir}}/config/server.properties"
+    mode: 0644
   notify:
     - reload kafka
 
 - name: Create client-ssl-config
-  template: src=client-ssl.properties.j2 dest=/usr/local/kafka/config/client-ssl.properties mode=644
-
+  template:
+    src: client-ssl.properties.j2
+    dest: "{{kafka_dir}}/config/client-ssl.properties"
+    mode: 0644
 
 - name: Start zookeeper
   service: name=zookeeper.service state=started enabled=yes

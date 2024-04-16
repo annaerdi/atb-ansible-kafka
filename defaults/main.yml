@@ -1,15 +1,19 @@
+kafka_openjdk: 'openjdk-21-jdk'
 kafka_server_template: server.properties.j2
-kafka_url: http://mirror.klaus-uwe.me/apache/kafka/2.6.2/kafka_2.13-2.6.2.tgz
-kafka_version: kafka_2.13-2.6.2
+kafka_url: https://downloads.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz
+kafka_version: kafka_2.13-3.7.0
 kafka_heapopts: '-Xmx1G -Xms1G'
-kafka_keydir: '/usr/local/kafka/keydir'
+kafka_dir: '/usr/local/kafka'
+kafka_keydir: '{{kafka_dir}}/keydir'
 kafka_ssl_serverkeystorepw: 'Enoog9queiHeecu'
 kafka_ssl_serverkeypass: '{{kafka_ssl_serverkeystorepw}}'
 kafka_ssl_cakeypw: 'iceDaig8Ahghija'
 kafka_ssl_servertruststorepw: 'thaeFa9genguu1o'
 kafka_ssl_clienttruststorepw: 'eexuongeeWah3vi'
 kafka_logdir: '/var/lib/kafka'
+kafka_zoodir: '/var/lib/zookeeper'
 kafka_brokerid: 0
+kafka_auto_create_topics: true
 # The minimum age of a log file to be eligible for deletion due to age (in hours)
 kafka_log_retention: 96
 kafka_zookeeper: localhost:2181
