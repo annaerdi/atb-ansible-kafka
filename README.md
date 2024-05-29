@@ -106,3 +106,25 @@ Hello, World
 ```
 echo "Hallo Welt" | /usr/local/kafka/bin/kafka-console-producer.sh --topic TestTopic --bootstrap-server localhost:9092
 ```
+## Example playbook:
+
+```yaml
+- name: Install Kafka Host
+  hosts: all
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Install Reposerver Packages
+      ansible.builtin.apt:
+          pkg:
+            - curl
+            - netcat-traditional
+          update_cache: yes
+  roles:
+          - role: hostname
+            vars:
+                  hostname: kafka
+                  hostname_ip: 192.168.100.10
+                  hostname_fqdn: kafka.aecid-testbed.local
+          - role: kafka
+```
