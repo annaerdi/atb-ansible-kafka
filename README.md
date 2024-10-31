@@ -55,7 +55,7 @@ Ubuntu:
 ```
 apt install ansible git
 
-git clone https://@git-service.ait.ac.at/ict-caiscluster/aecid/tools/ansible/kafka.git /etc/ansible/roles/kafka
+git clone https://github.com/ait-testbed/atb-ansible-kafka.git /etc/ansible/roles/kafka
 
 cat > /etc/ansible/kafka.yml << EOF
 ---
