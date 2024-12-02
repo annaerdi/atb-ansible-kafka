@@ -44,6 +44,7 @@ Simply put this role to the "roles"-folder and use the following playbook.yml:
 ---
 
 - hosts: localhost
+  become: true
   roles:
     - kafka
 
@@ -60,6 +61,7 @@ git clone https://github.com/ait-testbed/atb-ansible-kafka.git /etc/ansible/role
 cat > /etc/ansible/kafka.yml << EOF
 ---
 - hosts: localhost
+  become: true
   roles:
     - kafka
 EOF
